@@ -13,7 +13,13 @@ bool isComment(string output) {
     return !output.empty() && output[0] == '#';
 
 }
+string getRGB(int pixel) {
+    int R = (pixel >> 16) & 0xFF;
+    int G = (pixel >> 8) & 0xFF;
+    int B = pixel & 0xFF;
 
+    return "(" + to_string(R) + ", " + to_string(G) + ", " + to_string(B) + ")";
+}
 int main() {
 
     setlocale(LC_CTYPE, "Polish");
@@ -112,6 +118,6 @@ int main() {
     }
     std::cout << "Szerokoœæ: " << info[1] << "\n";
     std::cout << "Wysokoœæ: " << info[2] << "\n";
-    std::cout << "Najczêœciej wystepujacy kolor to: " << maxKey << " i wyst¹pi³ " << maxValue << " razy" << "\n";
+    std::cout << "Najczêœciej wystepujacy kolor to: " << (((info[0] == 3) || ((info[0] == 6))) ? getRGB(stoi(maxKey)) : maxKey) << " i wyst¹pi³ " << maxValue << " razy" << "\n";
     std::cout << "Liczba unikalnych kolorow:  " << unique_colors << "\n";
 }
