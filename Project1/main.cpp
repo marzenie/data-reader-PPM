@@ -20,7 +20,7 @@ string getRGB(int pixel) {
 
     return "(" + to_string(R) + ", " + to_string(G) + ", " + to_string(B) + ")";
 }
-int main() {
+int start() {
 
     setlocale(LC_CTYPE, "Polish");
 
@@ -56,7 +56,7 @@ int main() {
     int limit;
 
     while (getline(file_read, output)) {
-        
+
         if (isComment(output)) continue;
 
         if (i == 0) {
@@ -84,9 +84,11 @@ int main() {
             int val_int = stoi(value);
             if (i == limit + 1) {
                 color = (val_int << 16);
-            } else if (i == limit + 2) {
+            }
+            else if (i == limit + 2) {
                 color += (val_int << 8);
-            } else if (i == limit + 3) {
+            }
+            else if (i == limit + 3) {
                 color += val_int;
                 data[to_string(color)]++;
                 i = limit + 1; //zerowanie i do startowego punktu dla kolejnej liczby
@@ -120,4 +122,28 @@ int main() {
     std::cout << "Wysokoœæ: " << info[2] << "\n";
     std::cout << "Najczêœciej wystepujacy kolor to: " << (((info[0] == 3) || ((info[0] == 6))) ? getRGB(stoi(maxKey)) : maxKey) << " i wyst¹pi³ " << maxValue << " razy" << "\n";
     std::cout << "Liczba unikalnych kolorow:  " << unique_colors << "\n";
+
+}
+int main() {
+    string resp;
+    start();
+    while (true) {
+        std::cout << "Czy chcesz wczytaæ kolejny plik(tak/nie):";
+        cin >> resp;
+
+        for (auto& resp_sm : resp) {
+            resp_sm = tolower(resp_sm);
+        }
+
+        if (resp != "tak" && resp != "nie") {
+            continue;
+        }
+        if (resp == "nie") {
+            return 0;
+        }
+        start();
+        
+
+    }
+
 }
