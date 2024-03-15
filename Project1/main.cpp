@@ -18,7 +18,7 @@ string getRGB(int pixel) {
     int G = (pixel >> 8) & 0xFF;
     int B = pixel & 0xFF;
 
-    return "(" + to_string(R) + ", " + to_string(G) + ", " + to_string(B) + ")";
+    return "RGB(" + to_string(R) + ", " + to_string(G) + ", " + to_string(B) + ")";
 }
 int start() {
 
@@ -59,7 +59,7 @@ int start() {
 
         if (isComment(output)) continue;
 
-        if (i == 0) {
+        if (i == 0) { // get file type & set limit
             info.push_back(stoi(output.substr(1)));
             limit = ((info[0] == 1) || (info[0] == 4)) ? 2 : 3;
             i++;
@@ -70,16 +70,17 @@ int start() {
         string value;
 
         while (values >> value) {
-            if (limit >= i) {
+            if (limit >= i) { // get file info (width / height / color depth )
                 info.push_back(stoi(value));
                 i++;
                 continue;
             }
 
-            if (!((info[0] == 3) || (info[0] == 6))) {
+            if (!((info[0] == 3) || (info[0] == 6))) { // if no RGB than save it to map as key
                 data[value]++;
                 continue;
             }
+
 
             int val_int = stoi(value);
             if (i == limit + 1) {
@@ -89,9 +90,9 @@ int start() {
                 color += (val_int << 8);
             }
             else if (i == limit + 3) {
-                color += val_int;
+                color += val_int; //code RGB into 1 int variable
                 data[to_string(color)]++;
-                i = limit + 1; //zerowanie i do startowego punktu dla kolejnej liczby
+                i = limit + 1; //zeroing i variable to the starting point for the next number
                 continue;
             }
 
@@ -111,6 +112,7 @@ int start() {
     int maxValue = numeric_limits<int>::min(); // Initialize with smallest possible int value
     int unique_colors = 0;
     string maxKey;
+
     for (const auto& pair : data) {
         unique_colors++;
         if (pair.second > maxValue) {
@@ -128,7 +130,7 @@ int main() {
     string resp;
     start();
     while (true) {
-        std::cout << "Czy chcesz wczytaæ kolejny plik(tak/nie):";
+        std::cout << "Czy chcesz wczytaæ kolejny plik(tak/nie): ";
         cin >> resp;
 
         for (auto& resp_sm : resp) {
