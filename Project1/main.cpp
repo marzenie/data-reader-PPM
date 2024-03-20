@@ -26,7 +26,7 @@ int start() {
 
     string name_ext, output;
     vector<int> info;
-    map<string, int> data;
+    map<int, int> data;
     /*
     Info vector:
     0 - type (Without letter P)
@@ -40,14 +40,14 @@ int start() {
 
     */
 
-    std::cout << "Podaj nazwê pliku ( z rozszerzeniem ): ";
+    std::cout << "Podaj nazwÃª pliku ( z rozszerzeniem ): ";
     cin >> name_ext;
 
     fstream file_read;
     file_read.open(name_ext, ios::in);
 
     if (!file_read.is_open()) {
-        std::cout << "Nie mo¿na otworzyæ pliku\n";
+        std::cout << "Nie moÂ¿na otworzyÃ¦ pliku\n";
         return 1;
     }
 
@@ -67,11 +67,11 @@ int start() {
         }
 
         stringstream values(output);
-        string value;
+        int value;
 
         while (values >> value) {
             if (limit >= i) { // get file info (width / height / color depth )
-                info.push_back(stoi(value));
+                info.push_back(value);
                 i++;
                 continue;
             }
@@ -82,7 +82,7 @@ int start() {
             }
 
 
-            int val_int = stoi(value);
+            int val_int = value;
             if (i == limit + 1) {
                 color = (val_int << 16);
             }
@@ -91,7 +91,7 @@ int start() {
             }
             else if (i == limit + 3) {
                 color += val_int; //code RGB into 1 int variable
-                data[to_string(color)]++;
+                data[color]++;
                 i = limit + 1; //zeroing i variable to the starting point for the next number
                 continue;
             }
@@ -120,9 +120,9 @@ int start() {
             maxKey = pair.first;
         }
     }
-    std::cout << "Szerokoœæ: " << info[1] << "\n";
-    std::cout << "Wysokoœæ: " << info[2] << "\n";
-    std::cout << "Najczêœciej wystepujacy kolor to: " << (((info[0] == 3) || ((info[0] == 6))) ? getRGB(stoi(maxKey)) : maxKey) << " i wyst¹pi³ " << maxValue << " razy" << "\n";
+    std::cout << "SzerokoÅ“Ã¦: " << info[1] << "\n";
+    std::cout << "WysokoÅ“Ã¦: " << info[2] << "\n";
+    std::cout << "NajczÃªÅ“ciej wystepujacy kolor to: " << (((info[0] == 3) || ((info[0] == 6))) ? getRGB(stoi(maxKey)) : maxKey) << " i wystÂ¹piÂ³ " << maxValue << " razy" << "\n";
     std::cout << "Liczba unikalnych kolorow:  " << unique_colors << "\n";
 
 }
@@ -130,7 +130,7 @@ int main() {
     string resp;
     start();
     while (true) {
-        std::cout << "Czy chcesz wczytaæ kolejny plik(tak/nie): ";
+        std::cout << "Czy chcesz wczytaÃ¦ kolejny plik(tak/nie): ";
         cin >> resp;
 
         for (auto& resp_sm : resp) {
@@ -144,7 +144,7 @@ int main() {
             return 0;
         }
         start();
-        
+
 
     }
 
